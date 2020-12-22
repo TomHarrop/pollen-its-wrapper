@@ -42,9 +42,9 @@ From: rocker/verse:4.0.3
         pandas==1.1.5
 
     # install pipeline
-    # /usr/bin/python3 -m pip \
-    #     install \
-    #     git+git://github.com/tomharrop/pollen-its-wrapper.git@v0.0.1
+    /usr/bin/python3 -m pip \
+        install \
+        git+git://github.com/tomharrop/pollen-its-wrapper.git@v0.0.1
 
 %runscript
     exec /usr/local/bin/pollen_its_wrapper "$@"
