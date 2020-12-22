@@ -2,10 +2,10 @@ Bootstrap: docker
 From: rocker/verse:4.0.3
 
 %help
-    Container for pollen-its-wrapper v0.0.2
+    Container for pollen-its-wrapper v0.0.3
 
 %labels
-    VERSION "pollen-its-wrapper v0.0.2"
+    VERSION "pollen-its-wrapper v0.0.3"
     MAINTAINER "Tom Harrop"
 
 %post
@@ -39,12 +39,13 @@ From: rocker/verse:4.0.3
         install \
     	biopython==1.78 \
         cutadapt==3.1 \
-        pandas==1.1.5
+        pandas==1.1.5 \
+        snakemake==5.31.1
 
     # install pipeline
     /usr/bin/python3 -m pip \
         install \
-        git+git://github.com/tomharrop/pollen-its-wrapper.git@v0.0.2
+        git+git://github.com/tomharrop/pollen-its-wrapper.git@v0.0.3
 
 %runscript
     exec /usr/local/bin/pollen_its_wrapper "$@"

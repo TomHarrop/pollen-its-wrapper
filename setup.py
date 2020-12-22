@@ -12,7 +12,7 @@ def readme():
 
 setup(
     name='pollen_its_wrapper',
-    version='0.0.2',
+    version='0.0.3',
     description='python3 wrapper for pollen ITS processing',
     long_description=readme(),
     url='https://github.com/tomharrop/pollen-its-wrapper',
@@ -23,7 +23,8 @@ setup(
     install_requires=[
         'biopython>=1.78',
         'cutadapt>=3.1',
-        'pandas>=1.1.5'
+        'pandas>=1.1.5',
+        'snakemake>=5.31.1'
     ],
     entry_points={
         'console_scripts': [
