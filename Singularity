@@ -25,7 +25,8 @@ From: rocker/verse:4.0.3
         install.packages('BiocManager') ; \
         BiocManager::install(c(\
             'dada2', \
-            'data.table'), 
+            'data.table', \
+            'gtools'), 
             type='source', ask=FALSE)"
 
     /usr/bin/python3 -m pip \

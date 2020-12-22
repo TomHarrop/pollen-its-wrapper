@@ -10,10 +10,10 @@ graph.svg: pollen_its_wrapper/Snakefile
 	--config \
 	outdir=out \
 	threads=8 \
-	bam=data/gt_output/merged.bam \
-	vcf=data/filtered.vcf.gz \
+	database=data/its1-58024_dada2.fa \
 	samples_csv=data/samples.csv \
-	ref=data/GCF_003254395.2_Amel_HAv3.1_genomic.fna \
+	its_f=ATGCGATACTTGGTGTGAAT \
+	its_r=GACGCTTCTCCAGACTACAAT \
  	| grep -v "^[[:space:]+]0" | grep -v "\->[[:space:]]0" \
 	| dot -Tsvg \
 	> graph.svg

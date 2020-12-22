@@ -9,7 +9,7 @@ import snakemake
 
 def parse_arguments():
     parser = argparse.ArgumentParser(
-        prog='phase_honeybee_vcf')
+        prog='pollen_its_wrapper')
     parser.add_argument(
         '-n',
         help='Dry run',
@@ -31,23 +31,23 @@ def parse_arguments():
         dest='restart_times',
         default=0)
     parser.add_argument(
-        '--ref',
+        '--database',
         required=True,
-        help='Reference genome in uncompressed fasta',
+        help='Reference fasta file (see README)',
         type=str,
-        dest='ref')
+        dest='database')
     parser.add_argument(
-        '--vcf',
-        required=True,
-        help='Filtered, compressed vcf from honeybee_genotype_pipeline',
+        '--forward_primer',
+        help='Forward primer EXCLUDING barcode',
         type=str,
-        dest='vcf')
+        dest='its_f',
+        default='ATGCGATACTTGGTGTGAAT')
     parser.add_argument(
-        '--bam',
-        required=True,
-        help='Indexed, merged bamfile from honeybee_genotype_pipeline',
+        '--reverse_primer',
+        help='Reverse primer EXCLUDING barcode',
         type=str,
-        dest='bam')
+        dest='its_r',
+        default='GACGCTTCTCCAGACTACAAT')
     parser.add_argument(
         '--samples_csv',
         required=True,

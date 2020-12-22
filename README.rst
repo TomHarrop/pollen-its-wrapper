@@ -1,50 +1,61 @@
-phase honeybee vcf
+Pollen ITS wrapper
 ==================
 
-Preconfigured pipeline for converting the VCF and BAM output from
-`honeybee_genotype_pipeline <https://github.com/tomharrop/honeybee-genotype-pipeline>`__
-to a phased VCF.
+Preconfigured pipeline for converting the fastq output from pollen ITS
+sequencing to a CSV of taxon counts.
 
-For each hive, this pipeline:
+This pipeline:
 
-1. Extracts the consensus sequence from the single drone and maps it
-   back to the reference
-2. Extracts the mapped reads and called variants for the pooled sample
-3. Uses 1 & 2 as evidence for ``whatshap phase``
+1. Runs the recommended filter and trimming steps with cutadapt
+2. Runs ``dada2`` on the filtered reads
+3. Combines the resulting counts table with supplied taxonomic
+   information
 
 Install
 -------
 
+Using ``singularity``
+~~~~~~~~~~~~~~~~~~~~~
+
 |https://www.singularity-hub.org/static/img/hosted-singularity–hub-%23e32929.svg|
 
 Use the singularity container hosted on `Singularity
-hub <https://singularity-hub.org/collections/5020>`__. The container
+hub <https://singularity-hub.org/collections/5055>`__. The container
 provides:
 
 ::
 
-   whatshap
-   samtools
-   bcftools
-   minimap2
-   tabix
+   cutadapt
+   dada2
+   data.table
 
-If you have the above dependencies installed, you can install the
-pipeline with ``pip3``:
+Using ``pip``
+~~~~~~~~~~~~~
+
+If you have the dependencies installed, you can install the pipeline
+with ``pip3``:
 
 .. code:: bash
 
-   pip3 install \
-       git+git://github.com/tomharrop/phase-honeybee-vcf.git
+   python3 -m pip install \
+       git+git://github.com/tomharrop/pollen-its-wrapper.git
+
+Running
+-------
+
+-  With singularity:
+   ``singularity exec path/to/pollen-its-wrapper.sif pollen_its_wrapper``
+-  With ``pip`` install: ``pollen_its_wrapper``
 
 Usage
 -----
 
 ::
 
-   phase_honeybee_vcf [-h] [-n] [--threads int] [--restart_times RESTART_TIMES]
-                             --ref REF --vcf VCF --bam BAM --samples_csv SAMPLES_CSV
-                             --outdir OUTDIR
+   pollen_its_wrapper [-h] [-n] [--threads int]
+                             [--restart_times RESTART_TIMES] --database DATABASE
+                             [--forward_primer ITS_F] [--reverse_primer ITS_R]
+                             --samples_csv SAMPLES_CSV --outdir OUTDIR
 
    optional arguments:
      -h, --help            show this help message and exit
@@ -52,25 +63,34 @@ Usage
      --threads int         Number of threads. Default: 4
      --restart_times RESTART_TIMES
                            number of times to restart failing jobs (default 0)
-     --ref REF             Reference genome in uncompressed fasta
-     --vcf VCF             Filtered, compressed vcf from honeybee_genotype_pipeline
-     --bam BAM             Indexed, merged bamfile from honeybee_genotype_pipeline
+     --database DATABASE   Reference fasta file (see README)
+     --forward_primer ITS_F
+                           Forward primer EXCLUDING barcode
+     --reverse_primer ITS_R
+                           Reverse primer EXCLUDING barcode
      --samples_csv SAMPLES_CSV
                            Sample csv (see README)
      --outdir OUTDIR       Output directory
 
--  The ``--vcf`` and ``--bam`` files should be output from
-   `honeybee_genotype_pipeline <https://github.com/tomharrop/honeybee-genotype-pipeline>`__
--  ``--samples_csv`` should link the ``sample`` to the ``hive`` as
-   follows:
+-  The ``--database`` should be a FASTA file with sequence identifiers
+   giving the taxonomic levels, e.g.
 
 ::
 
-   sample,hive,type
-   BB34_drone,BB34,drone
-   BB34_pool,BB34,pool
-   BB42_drone,BB42,drone
-   BB42_pool,BB42,pool
+   >k_Viridiplantae;p_Streptophyta;c_;o_Solanales;f_Solanaceae;g_Nicotiana;s_Nicotiana.occidentalis
+   GTGAACCTGCGGAAGGATCATTGTCGAAACCTGCAAGGCAGAACGACCCGCGAACTTGTT
+   TAAAAACTGGGGAGCAGTGCGGCCGGGATGCTTCGGCCTCCGTCCGTGCGGCTTCCTCCT
+   ...
+
+-  ``--samples_csv`` should have columns with the sample name and the
+   path to the r1 and r2 files. Only one row per sample is allowed.
+
+::
+
+   sample,r1_path,r2_path
+   3550-097-0-1,data/3550-097-0-1_S1_L001_R1_001.fastq.gz,data/3550-097-0-1_L001-ds.b11339737a254dd9aac0f509ebde3437/3550-097-0-1_S1_L001_R2_001.fastq.gz
+   3550-098-0-1,data/3550-098-0-1_S2_L001_R1_001.fastq.gz,data/3550-098-0-1_L001-ds.81403738ef3046ee8243ab63901d0070/3550-098-0-1_S2_L001_R2_001.fastq.gz
+   3550-099-0-1,data/3550-099-0-1_S3_L001_R1_001.fastq.gz,data/3550-099-0-1_L001-ds.d93a6aeeb0364f6791eb7e4322d4e89d/3550-099-0-1_S3_L001_R2_001.fastq.gz
 
 Graph
 -----
@@ -78,5 +98,5 @@ Graph
 |image1|
 
 .. |https://www.singularity-hub.org/static/img/hosted-singularity–hub-%23e32929.svg| image:: https://www.singularity-hub.org/static/img/hosted-singularity--hub-%23e32929.svg
-   :target: https://singularity-hub.org/collections/5020
+   :target: https://singularity-hub.org/collections/5055
 .. |image1| image:: graph.svg
