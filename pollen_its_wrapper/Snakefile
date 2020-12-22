@@ -4,7 +4,6 @@ from Bio import Seq
 from pathlib import Path
 import pandas
 import shutil
-import snakemake
 
 
 #############

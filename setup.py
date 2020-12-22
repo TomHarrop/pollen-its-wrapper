@@ -12,7 +12,7 @@ def readme():
 
 setup(
     name='pollen_its_wrapper',
-    version='0.0.1',
+    version='0.0.2',
     description='python3 wrapper for pollen ITS processing',
     long_description=readme(),
     url='https://github.com/tomharrop/pollen-its-wrapper',

@@ -4,7 +4,7 @@ Preconfigured pipeline for converting the fastq output from pollen ITS sequencin
 
 This pipeline:
 
-1. Runs the recommended filter and trimming steps with cutadapt
+1. Runs the recommended filter and trimming steps with `cutadapt`
 2. Runs `dada2` on the filtered reads
 3. Combines the resulting counts table with supplied taxonomic information
 

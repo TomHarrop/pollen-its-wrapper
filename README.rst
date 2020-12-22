@@ -6,7 +6,7 @@ sequencing to a CSV of taxon counts.
 
 This pipeline:
 
-1. Runs the recommended filter and trimming steps with cutadapt
+1. Runs the recommended filter and trimming steps with ``cutadapt``
 2. Runs ``dada2`` on the filtered reads
 3. Combines the resulting counts table with supplied taxonomic
    information
@@ -14,8 +14,8 @@ This pipeline:
 Install
 -------
 
-Using ``singularity``
-~~~~~~~~~~~~~~~~~~~~~
+Recommended: use ``singularity``
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 |https://www.singularity-hub.org/static/img/hosted-singularity–hub-%23e32929.svg|
 
